@@ -20,22 +20,12 @@ class _QuestionOnePageState extends State<QuestionOnePage> {
   }
 
   String transformString(String input) {
-    final regExp = RegExp(r'([^()]+)');
     var result = input;
+    final pattern = RegExp(r'\(([^)]+)\)');
 
-    if (regExp.hasMatch(result)) {
-      var initial = true;
-      result = result.replaceAllMapped(regExp, (match) {
-        log(match.group(1)!.toString());
-        if (initial) {
-          initial = false;
-          return match.group(1)!;
-        } else {
-          final reversed = match.group(1)!.split("").reversed.join('');
-          return reversed;
-        }
-      });
-    }
+    result = result.replaceAllMapped(pattern, (match) {
+      return match.group(1)!.split('').reversed.join('');
+    });
 
     return result;
   }
